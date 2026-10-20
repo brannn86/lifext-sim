@@ -1,0 +1,20 @@
+- id: cherry_blossoms
+  text: The cherry blossoms are in full bloom. Your family holds a hanami picnic.
+  minAge: 2
+  when: "country == 'example:japan'"
+  weight: 2
+  effects: ["stats.happiness += rand(3, 7)", "unlock hanami"]
+
+- id: lucky_charm
+  text: An old woman at a shrine offers you an omamori (a lucky charm).
+  minAge: 8
+  once: true
+  choices:
+    - label: "Buy it ({currency}{fmt(price)})"
+      when: "money >= price"
+      effects: ["money -= price", "flag lucky_charm", "stats.karma += 2"]
+      text: You tie the charm to your bag. You feel lucky.
+    - label: Thank her and leave
+      text: You bow politely and walk on.
+  vars:
+    price: 10

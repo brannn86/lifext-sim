@@ -1,0 +1,8 @@
+{
+  "id": "example",
+  "name": "Example Expansion: Lands of the Rising Sun",
+  "version": "0.1.0",
+  "author": "Lifext",
+  "description": "Shows every modding feature: a new country with names, new events and a career, extra names for an existing country, lore, and patches that change core content.",
+  "dependencies": ["core"]
+}

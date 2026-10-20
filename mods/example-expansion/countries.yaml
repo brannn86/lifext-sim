@@ -1,0 +1,5 @@
+- id: japan
+  name: Japan
+  flag: "🇯🇵"
+  currency: "¥"
+  names: { male: jp_male, female: jp_female, last: jp_last }

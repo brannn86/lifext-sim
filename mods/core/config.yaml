@@ -1,0 +1,43 @@
+# Global rules. Any mod can change these with a `config` patch.
+startMoney: 0
+# Leave startYear out to use the real current year.
+# startYear: 2000
+
+# How many random events happen each year.
+eventsPerYear: "if(age < 3, rand(0, 1), rand(1, 2))"
+
+# Chance (0..1) that the player dies this year. Rises steeply after 55,
+# plus extra risk when health is low.
+deathChance: "0.0008 + pow(max(0, age - 55) / 45, 3) * 0.55 + if(stats.health < 25, (25 - stats.health) / 120, 0)"
+
+# Same for NPCs (scope: only `age` is available).
+npcDeathChance: "0.0008 + pow(max(0, age - 55) / 45, 3) * 0.55"
+
+# Points every relationship loses per year unless you interact.
+relationshipDecay: "rand(0, 4)"
+
+# Yearly expenses for adults who aren't students: basic living, taxes and
+# lifestyle (60% of salary), plus kids. Never pushes money below zero by itself.
+livingCost: "if(age < 18 || inSchool(), 0, 10000 + if(hasJob(), job.salary * 0.6, 0) + count('child') * 4000)"
+
+retirementAge: 60
+# Pension = final salary * pensionRate, paid yearly.
+pensionRate: 0.4
+
+deathCauses:
+  - text: old age
+    when: "age >= 75"
+    weight: 6
+  - text: a heart attack
+    when: "age >= 40"
+    weight: 3
+  - text: cancer
+    when: "age >= 30"
+    weight: 2
+  - text: pneumonia
+    weight: 1
+  - text: a car accident
+    weight: 1
+  - text: a stroke
+    when: "age >= 50"
+    weight: 2

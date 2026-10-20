@@ -1,0 +1,101 @@
+# requires:     who can get the job (expression).
+# applyChance:  percent chance of being hired when qualified (default 60).
+# salary:       yearly pay at level 0; each promotion adds `raise` (default 0.3 = +30%).
+# titles:       the promotion ladder.
+- id: cashier
+  name: Cashier
+  category: Part-time
+  icon: "🛒"
+  minAge: 14
+  salary: 12000
+  applyChance: 80
+  titles: [Cashier, Senior Cashier, Shift Lead]
+
+- id: waiter
+  name: Waiter
+  category: Part-time
+  icon: "🍽️"
+  minAge: 16
+  salary: 16000
+  applyChance: "50 + stats.looks / 3"
+  titles: [Waiter, Head Waiter, Restaurant Manager]
+
+- id: clerk
+  name: Office Clerk
+  category: Office
+  icon: "🗂️"
+  minAge: 18
+  requires: "completed('secondary')"
+  requirementText: Secondary school
+  salary: 32000
+  titles: [Junior Clerk, Clerk, Senior Clerk, Office Manager]
+
+- id: police
+  name: Police Officer
+  category: Public service
+  icon: "👮"
+  minAge: 18
+  maxAge: 50
+  requires: "completed('secondary') && stats.health >= 50 && !has('criminal_record')"
+  requirementText: Secondary school, health 50+, clean record
+  salary: 48000
+  titles: [Officer, Sergeant, Lieutenant, Captain, Chief of Police]
+
+- id: teacher
+  name: Teacher
+  category: Education
+  icon: "🍎"
+  minAge: 21
+  requires: "completed('university')"
+  requirementText: University degree
+  salary: 45000
+  titles: [Teacher, Senior Teacher, Head of Department, Principal]
+
+- id: programmer
+  name: Programmer
+  category: Tech
+  icon: "💻"
+  minAge: 18
+  requires: "completed('university') && stats.smarts >= 50"
+  requirementText: University degree, smarts 50+
+  applyChance: "stats.smarts - 10"
+  salary: 70000
+  titles: [Junior Developer, Developer, Senior Developer, Lead Developer, CTO]
+
+- id: doctor
+  name: Doctor
+  category: Medicine
+  icon: "🩺"
+  minAge: 25
+  requires: "completed('medical_school')"
+  requirementText: Medical school
+  applyChance: 85
+  salary: 120000
+  raise: 0.25
+  titles: [Resident, Doctor, Senior Doctor, Chief of Medicine]
+
+- id: model
+  name: Model
+  category: Entertainment
+  icon: "📸"
+  minAge: 16
+  maxAge: 40
+  requires: "stats.looks >= 75"
+  requirementText: Looks 75+
+  applyChance: "stats.looks - 30"
+  salary: 50000
+  raise: 0.6
+  titles: [Catalog Model, Runway Model, Supermodel]
+
+- id: athlete
+  name: Pro Athlete
+  category: Sports
+  icon: "🏅"
+  minAge: 18
+  maxAge: 32
+  requires: "stats.athleticism >= 75 && stats.health >= 60"
+  requirementText: Very athletic, healthy
+  applyChance: "stats.athleticism - 40"
+  salary: 90000
+  raise: 0.8
+  titles: [Rookie, Starter, Star Player, Legend]

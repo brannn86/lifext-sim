@@ -1,0 +1,38 @@
+- id: back_pain
+  text: Your back has started to ache constantly.
+  minAge: 55
+  once: true
+  effects: ["stats.health -= rand(3, 6)", "stats.happiness -= rand(1, 3)"]
+
+- id: grandkid_visit
+  text: Your grandkids came to visit.
+  minAge: 55
+  when: "count('child') > 0"
+  effects: ["stats.happiness += rand(5, 10)"]
+
+- id: forgetful
+  text: You've been forgetting where you put your keys.
+  minAge: 65
+  effects: ["stats.smarts -= rand(1, 4)"]
+
+- id: health_scare
+  text: Your doctor found something worrying on a scan.
+  minAge: 50
+  choices:
+    - label: "Get treatment ({currency}5,000)"
+      when: "money >= 5000"
+      effects: ["money -= 5000"]
+      outcomes:
+        - weight: 85
+          effects: ["stats.health += rand(5, 10)"]
+          text: The treatment worked. You're in the clear.
+        - weight: 15
+          effects: ["stats.health -= rand(5, 15)"]
+          text: The treatment didn't help much.
+    - label: Ignore it
+      outcomes:
+        - weight: 60
+          text: It turned out to be nothing.
+        - weight: 40
+          effects: ["stats.health -= rand(15, 30)"]
+          text: It got much worse.

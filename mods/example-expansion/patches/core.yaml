@@ -1,0 +1,33 @@
+# Patches change other mods' content without copying it.
+
+# 1) Merge: doctors earn more with this mod enabled.
+- type: careers
+  id: core:doctor
+  op: merge
+  value:
+    salary: 150000
+
+# 2) Append: add a third choice to the core "found wallet" event.
+- type: events
+  id: core:found_wallet
+  op: append
+  path: choices
+  value:
+    label: Donate it to charity
+    effects: ["stats.karma += 8"]
+    text: You donated the money to an animal shelter.
+
+# 3) Config: add a new death cause to the global list.
+- type: config
+  op: append
+  path: deathCauses
+  value:
+    text: a falling vending machine
+    weight: 0.2
+
+# 4) Set: make the lucky charm reduce the chance of the flu.
+- type: events
+  id: core:flu
+  op: set
+  path: when
+  value: "!has('lucky_charm') || chance(30)"

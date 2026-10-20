@@ -1,0 +1,87 @@
+- id: first_crush
+  text: "You have a huge crush on a classmate named {pick('Sam', 'Alex', 'Jordan', 'Riley', 'Casey')}."
+  minAge: 12
+  maxAge: 16
+  once: true
+  choices:
+    - label: Confess your feelings
+      outcomes:
+        - weight: "stats.looks"
+          effects: ["stats.happiness += rand(6, 12)"]
+          text: They like you too! You held hands at lunch.
+        - weight: 50
+          effects: ["stats.happiness -= rand(4, 10)"]
+          text: They laughed and walked away. Ouch.
+    - label: Keep it a secret
+      text: You kept your crush a secret.
+
+- id: party_invite
+  text: You were invited to a party where there will be alcohol.
+  minAge: 14
+  maxAge: 19
+  choices:
+    - label: Go and drink
+      outcomes:
+        - weight: 70
+          effects: ["stats.happiness += rand(4, 8)", "stats.health -= rand(1, 3)"]
+          text: You had a wild time.
+        - weight: 30
+          effects: ["stats.happiness -= rand(3, 8)", "flag caught_drinking"]
+          text: The police broke up the party and called your parents.
+    - label: Go but stay sober
+      effects: ["stats.happiness += rand(2, 5)"]
+      text: You had fun and remember all of it.
+    - label: Stay home
+      effects: ["stats.smarts += 1"]
+      text: You stayed home and read a book.
+
+- id: pimples
+  text: Puberty hit hard. Your face broke out in pimples.
+  minAge: 12
+  maxAge: 16
+  once: true
+  effects: ["stats.looks -= rand(2, 6)", "stats.happiness -= rand(1, 4)"]
+
+- id: tryouts
+  text: The school sports team is holding tryouts.
+  minAge: 12
+  maxAge: 18
+  when: "inSchool()"
+  choices:
+    - label: Try out
+      outcomes:
+        - weight: "stats.athleticism"
+          effects: ["flag on_sports_team", "stats.athleticism += rand(3, 6)", "stats.happiness += rand(4, 8)"]
+          text: You made the team!
+        - weight: 50
+          effects: ["stats.happiness -= rand(2, 5)"]
+          text: You didn't make the cut.
+    - label: Not interested
+      text: Sports aren't your thing.
+
+- id: exam_cheat
+  text: A classmate offers you the answers to the final exam.
+  minAge: 13
+  maxAge: 22
+  when: "inSchool()"
+  choices:
+    - label: Take the answers
+      outcomes:
+        - weight: 70
+          effects: ["education.grades += rand(8, 15)", "stats.karma -= 4"]
+          text: You aced the exam. Nobody found out.
+        - weight: 30
+          effects: ["education.grades -= rand(10, 20)", "stats.karma -= 4", "stats.happiness -= rand(4, 8)"]
+          text: You got caught cheating and failed the exam.
+    - label: Refuse
+      effects: ["stats.karma += 3"]
+      text: You decided to study honestly.
+
+- id: dog_old
+  text: Biscuit, your childhood dog, passed away peacefully in their sleep.
+  minAge: 14
+  maxAge: 25
+  once: true
+  when: "has('has_dog')"
+  weight: 3
+  effects: ["unflag has_dog", "stats.happiness -= rand(8, 15)"]

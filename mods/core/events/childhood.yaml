@@ -1,0 +1,102 @@
+# Events are picked at random each year from those that are eligible
+# (age range + `when`), weighted by `weight` (default 1).
+# Events with `choices` pop up for the player; others just happen.
+
+- id: first_word
+  text: "You said your first word: \"{pick('mama', 'dada', 'no', 'cookie', 'dog')}\"!"
+  minAge: 1
+  maxAge: 2
+  once: true
+  weight: 4
+  effects: ["stats.happiness += 3"]
+
+- id: first_steps
+  text: You took your first steps!
+  minAge: 1
+  maxAge: 2
+  once: true
+  weight: 4
+  effects: ["stats.health += 2"]
+
+- id: chickenpox
+  text: You caught chickenpox and spent a week itching.
+  minAge: 2
+  maxAge: 10
+  once: true
+  effects: ["stats.health -= rand(2, 6)", "stats.happiness -= rand(1, 4)"]
+
+- id: stray_dog
+  text: A stray puppy followed you home from the park.
+  minAge: 4
+  maxAge: 14
+  once: true
+  choices:
+    - label: Beg your parents to keep it
+      outcomes:
+        - weight: 60
+          effects: ["flag has_dog", "stats.happiness += rand(8, 14)"]
+          text: Your parents said yes! You named the puppy Biscuit.
+        - weight: 40
+          effects: ["stats.happiness -= rand(2, 6)"]
+          text: Your parents said no. The puppy went to a shelter.
+    - label: Take it to a shelter
+      effects: ["stats.karma += 3"]
+      text: You took the puppy to an animal shelter.
+
+- id: bully
+  text: "A kid at school named {pick('Kyle', 'Tanya', 'Brad', 'Megan')} keeps picking on you."
+  minAge: 6
+  maxAge: 15
+  when: "inSchool()"
+  choices:
+    - label: Fight back
+      outcomes:
+        - weight: "30 + stats.athleticism / 2"
+          effects: ["stats.happiness += rand(4, 8)", "stats.karma -= 2"]
+          text: You stood your ground and the bully backed off.
+        - weight: 40
+          effects: ["stats.health -= rand(3, 8)", "stats.happiness -= rand(2, 5)"]
+          text: You lost the fight and went home with a bloody nose.
+    - label: Tell a teacher
+      effects: ["stats.happiness += rand(0, 3)"]
+      text: The teacher had a word with the bully. Things calmed down.
+    - label: Ignore it
+      effects: ["stats.happiness -= rand(2, 6)"]
+      text: You tried to ignore it, but it still hurt.
+
+- id: science_fair
+  text: Your school is holding a science fair.
+  minAge: 8
+  maxAge: 14
+  when: "inSchool()"
+  choices:
+    - label: Build a volcano
+      outcomes:
+        - weight: "stats.smarts"
+          effects: ["stats.smarts += rand(2, 5)", "stats.happiness += rand(3, 6)", "flag science_winner"]
+          text: Your volcano won first prize!
+        - weight: 50
+          effects: ["stats.smarts += 1"]
+          text: Your volcano fizzled, but you learned something.
+    - label: Skip it
+      text: You skipped the science fair.
+
+- id: grandma_cookies
+  text: Your grandma baked you cookies.
+  minAge: 3
+  maxAge: 12
+  effects: ["stats.happiness += rand(2, 5)"]
+
+- id: broken_arm
+  text: You fell off the monkey bars and broke your arm.
+  minAge: 4
+  maxAge: 12
+  once: true
+  effects: ["stats.health -= rand(5, 10)", "stats.happiness -= rand(3, 6)"]
+
+- id: old_town_story
+  text: Your grandfather told you stories about the founding of Old Town.
+  minAge: 5
+  maxAge: 12
+  once: true
+  effects: ["unlock old_town"]

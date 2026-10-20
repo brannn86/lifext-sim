@@ -1,0 +1,13 @@
+# names.* point at files in names/ (without .txt). Any mod can add lines
+# to an existing name list just by shipping a file with the same name.
+- id: us
+  name: United States
+  flag: "🇺🇸"
+  currency: "$"
+  names: { male: us_male, female: us_female, last: us_last }
+
+- id: uk
+  name: United Kingdom
+  flag: "🇬🇧"
+  currency: "£"
+  names: { male: uk_male, female: uk_female, last: uk_last }

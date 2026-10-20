@@ -1,0 +1,130 @@
+# Activities are once per year unless `oncePerYear: false`.
+# cost is paid up front. effects run, then one weighted outcome (if any).
+# Inside effects, vars.x = ... stores a value that text can show as {x}.
+
+# ---- Mind & body ----
+- id: gym
+  label: Go to the gym
+  category: Mind & Body
+  icon: "🏋️"
+  minAge: 12
+  effects: ["stats.health += rand(2, 6)", "stats.athleticism += rand(1, 4)", "stats.happiness += rand(0, 3)"]
+  text: You worked out at the gym. You feel stronger.
+
+- id: library
+  label: Visit the library
+  category: Mind & Body
+  icon: "📚"
+  minAge: 5
+  effects: ["stats.smarts += rand(1, 4)"]
+  text: You spent the afternoon reading at the library.
+
+- id: meditate
+  label: Meditate
+  category: Mind & Body
+  icon: "🧘"
+  minAge: 10
+  effects: ["stats.happiness += rand(2, 6)", "stats.health += rand(0, 2)"]
+  text: You meditated and found some inner peace.
+
+- id: doctor_visit
+  label: See a doctor
+  category: Mind & Body
+  icon: "🩺"
+  minAge: 18
+  cost: 150
+  effects: ["stats.health += rand(4, 12)"]
+  text: The doctor checked you over and prescribed some medicine.
+
+- id: salon
+  label: Salon & spa
+  category: Mind & Body
+  icon: "💇"
+  minAge: 14
+  cost: 80
+  effects: ["stats.looks += rand(1, 4)", "stats.happiness += rand(1, 3)"]
+  text: You got pampered at the salon.
+
+- id: plastic_surgery
+  label: Plastic surgery
+  category: Mind & Body
+  icon: "💉"
+  minAge: 18
+  cost: 6000
+  outcomes:
+    - weight: 80
+      effects: ["stats.looks += rand(8, 15)"]
+      text: The surgery went well. You look great!
+    - weight: 20
+      effects: ["stats.looks -= rand(10, 20)", "stats.happiness -= rand(5, 10)"]
+      text: The surgery was botched. You look worse than before.
+
+# ---- Leisure ----
+- id: night_out
+  label: Night out
+  category: Leisure
+  icon: "🪩"
+  minAge: 18
+  cost: 100
+  effects: ["stats.happiness += rand(3, 8)"]
+  outcomes:
+    - weight: 80
+      text: You had a great night out with friends.
+    - weight: 20
+      effects: ["stats.health -= rand(2, 5)"]
+      text: You partied too hard and woke up with a terrible hangover.
+
+- id: vacation
+  label: Go on vacation
+  category: Leisure
+  icon: "🏝️"
+  minAge: 18
+  cost: 2500
+  effects: ["stats.happiness += rand(8, 15)", "stats.health += rand(0, 3)"]
+  text: You went on a relaxing vacation.
+
+# ---- Money ----
+- id: lottery
+  label: Buy a lottery ticket
+  category: Money
+  icon: "🎟️"
+  minAge: 18
+  cost: 10
+  oncePerYear: false
+  outcomes:
+    - weight: 1
+      effects: ["money += 1000000", "stats.happiness += 30", "counters.lottery_wins += 1"]
+      text: "🎉 You won the JACKPOT: {currency}1,000,000!"
+    - weight: 300
+      effects: ["vars.prize = rand(20, 500)", "money += vars.prize"]
+      text: "You won a small prize of {currency}{fmt(prize)}."
+    - weight: 9699
+      text: Not a winner. Better luck next time.
+
+# ---- Crime ----
+- id: shoplift
+  label: Shoplift
+  category: Crime
+  icon: "🕶️"
+  minAge: 10
+  effects: ["stats.karma -= rand(2, 5)", "counters.crimes += 1"]
+  outcomes:
+    - weight: "60 + stats.smarts / 5"
+      effects: ["vars.loot = rand(10, 120)", "money += vars.loot"]
+      text: "You got away with {currency}{fmt(loot)} worth of stuff."
+    - weight: 35
+      when: "age < 18"
+      effects: ["stats.happiness -= rand(3, 8)"]
+      text: You got caught! The store called your parents and you got grounded.
+    - weight: 35
+      when: "age >= 18"
+      effects: ["money -= 500", "flag criminal_record", "stats.happiness -= rand(3, 8)"]
+      text: "You got caught! You paid a {currency}500 fine and now have a criminal record."
+
+- id: volunteer
+  label: Volunteer
+  category: Leisure
+  icon: "🤲"
+  minAge: 12
+  effects: ["stats.karma += rand(3, 6)", "stats.happiness += rand(1, 4)", "counters.good_deeds += 1"]
+  text: You volunteered at a local shelter. It felt good to help.

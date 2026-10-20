@@ -1,0 +1,7 @@
+{
+  "id": "core",
+  "name": "Core",
+  "version": "0.1.0",
+  "author": "Lifext",
+  "description": "The base game. Everything here is ordinary mod content, so other mods can patch any of it."
+}

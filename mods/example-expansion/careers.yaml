@@ -1,0 +1,9 @@
+- id: shrine_keeper
+  name: Shrine Keeper
+  category: Spiritual
+  icon: "⛩️"
+  minAge: 18
+  requires: "country == 'example:japan' && stats.karma >= 55"
+  requirementText: Live in Japan, good karma
+  salary: 28000
+  titles: [Apprentice Keeper, Shrine Keeper, Head Priest]

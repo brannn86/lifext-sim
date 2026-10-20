@@ -1,0 +1,45 @@
+# Stats are not namespaced: expressions read them as stats.<id>.
+# start: value at birth.  drift: added every year (can be negative).
+- id: happiness
+  label: Happiness
+  icon: "😊"
+  visible: true
+  start: "rand(60, 100)"
+  drift: "if(stats.health < 30, -rand(1, 4), rand(-3, 2)) + if(count('spouse') > 0, 1, 0)"
+
+- id: health
+  label: Health
+  icon: "❤️"
+  visible: true
+  start: "rand(70, 100)"
+  drift: "if(age > 50, -rand(0, 1 + floor((age - 50) / 10)), rand(-1, 1))"
+
+- id: smarts
+  label: Smarts
+  icon: "🧠"
+  visible: true
+  start: "rand(10, 100)"
+  drift: "if(inSchool(), rand(0, 2), if(age > 70, -rand(0, 2), 0))"
+
+- id: looks
+  label: Looks
+  icon: "✨"
+  visible: true
+  start: "rand(10, 100)"
+  drift: "if(age < 20, rand(-1, 2), if(age > 35, -rand(0, 2), 0))"
+
+# Hidden stats: not shown on the stat bars, but used by events and careers.
+- id: karma
+  label: Karma
+  icon: "☯️"
+  visible: false
+  start: 50
+  # Slowly drifts back toward neutral, so only a consistently good (or bad) life stands out.
+  drift: "round((50 - stats.karma) / 15)"
+
+- id: athleticism
+  label: Athleticism
+  icon: "🏃"
+  visible: false
+  start: "rand(10, 90)"
+  drift: "if(age > 30, -rand(0, 2), 0)"

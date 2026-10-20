@@ -1,0 +1,30 @@
+# auto: true  -> you are enrolled automatically at startAge.
+# otherwise   -> you apply from the Career tab (acceptChance is a percent).
+- id: primary
+  name: Primary School
+  auto: true
+  startAge: 6
+  years: 6
+
+- id: secondary
+  name: Secondary School
+  auto: true
+  startAge: 12
+  years: 6
+  requires: "completed('primary')"
+
+- id: university
+  name: University
+  minAge: 17
+  years: 4
+  requires: "completed('secondary')"
+  acceptChance: "clamp(stats.smarts * 1.2 - 10, 5, 95)"
+  costPerYear: 8000
+
+- id: medical_school
+  name: Medical School
+  minAge: 21
+  years: 4
+  requires: "completed('university')"
+  acceptChance: "clamp((stats.smarts - 50) * 2, 1, 90)"
+  costPerYear: 15000

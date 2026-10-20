@@ -1,0 +1,56 @@
+# At death, the matching ribbon with the highest priority is awarded.
+- id: mediocre
+  name: Mediocre
+  icon: "🎗️"
+  description: A perfectly average life.
+  when: "true"
+  priority: 0
+
+- id: rich
+  name: Rich
+  icon: "💰"
+  description: Died with a fortune.
+  when: "money >= 2000000"
+  priority: 50
+
+- id: scholar
+  name: Scholar
+  icon: "🎓"
+  description: Highly educated and very smart.
+  when: "completed('university') && stats.smarts >= 85"
+  priority: 30
+
+- id: family
+  name: Family Person
+  icon: "👨‍👩‍👧"
+  description: Married with three or more kids.
+  when: "count('spouse') > 0 && count('child') >= 3"
+  priority: 35
+
+- id: rebel
+  name: Rebel
+  icon: "😈"
+  description: Committed lots of crimes.
+  when: "counter('crimes') >= 8"
+  priority: 40
+
+- id: saint
+  name: Saint
+  icon: "😇"
+  description: Kind to the core.
+  when: "stats.karma >= 85"
+  priority: 45
+
+- id: elder
+  name: Elder
+  icon: "🧓"
+  description: Lived to 95 or more.
+  when: "age >= 95"
+  priority: 60
+
+- id: tragic
+  name: Tragic
+  icon: "🥀"
+  description: Died young.
+  when: "age < 30"
+  priority: 70

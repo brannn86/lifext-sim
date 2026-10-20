@@ -1,0 +1,117 @@
+- id: found_wallet
+  weight: 0.5
+  text: "You found a wallet with {currency}{fmt(amount)} inside."
+  minAge: 6
+  maxAge: 90
+  vars:
+    amount: "rand(20, 300)"
+  choices:
+    - label: Keep it
+      effects: ["money += amount", "stats.karma -= 5"]
+      text: You pocketed the cash.
+    - label: Turn it in
+      effects: ["stats.karma += 5", "stats.happiness += rand(2, 6)"]
+      text: The owner thanked you warmly.
+
+- id: car_trouble
+  weight: 0.6
+  text: "Your car broke down. The repair costs {currency}{fmt(cost)}."
+  minAge: 18
+  vars:
+    cost: "rand(200, 1500)"
+  choices:
+    - label: Pay for it
+      effects: ["money -= cost"]
+      text: Your car is running again.
+    - label: Take the bus from now on
+      effects: ["stats.happiness -= rand(2, 5)"]
+      text: You started taking the bus.
+
+- id: coworker_conflict
+  text: A coworker keeps taking credit for your work.
+  minAge: 18
+  when: "hasJob()"
+  choices:
+    - label: Confront them
+      outcomes:
+        - weight: 60
+          effects: ["job.performance += rand(5, 10)"]
+          text: Your boss noticed and gave you the credit.
+        - weight: 40
+          effects: ["job.performance -= rand(5, 10)", "stats.happiness -= 3"]
+          text: It backfired. Now you look petty.
+    - label: Let it go
+      effects: ["stats.happiness -= rand(2, 5)"]
+      text: You let it slide.
+
+- id: bonus
+  text: "Your boss gave you a {currency}{fmt(amount)} bonus!"
+  minAge: 18
+  when: "hasJob() && job.performance >= 60"
+  vars:
+    amount: "rand(500, 5000)"
+  effects: ["money += amount", "stats.happiness += rand(3, 6)"]
+
+- id: flu
+  text: You came down with a nasty flu.
+  minAge: 3
+  effects: ["stats.health -= rand(3, 8)"]
+
+- id: marathon
+  weight: 0.5
+  text: A friend invited you to run a marathon.
+  minAge: 18
+  maxAge: 65
+  choices:
+    - label: Run it
+      outcomes:
+        - weight: "stats.health"
+          effects: ["stats.health += rand(2, 5)", "stats.happiness += rand(5, 10)", "stats.athleticism += 3"]
+          text: You finished the marathon!
+        - weight: 40
+          effects: ["stats.health -= rand(3, 8)"]
+          text: You collapsed at mile 18 and were carried off by medics.
+    - label: Cheer from the sidelines
+      effects: ["stats.happiness += 1"]
+      text: You cheered your friend across the finish line.
+
+- id: investment_tip
+  weight: 0.4
+  text: A friend has a "can't lose" investment opportunity.
+  minAge: 21
+  when: "money >= 1000"
+  choices:
+    - label: "Invest {currency}{fmt(min(floor(money / 2), 20000))}"
+      effects: ["vars.stake = min(floor(money / 2), 20000)", "money -= vars.stake"]
+      outcomes:
+        - weight: 35
+          effects: ["money += stake * 2"]
+          text: "It paid off. You doubled your {currency}{fmt(stake)}!"
+        - weight: 65
+          text: "It was a scam. You lost {currency}{fmt(stake)}."
+    - label: Politely decline
+      text: You kept your money.
+
+- id: midlife
+  text: You're having a midlife crisis.
+  minAge: 40
+  maxAge: 55
+  once: true
+  choices:
+    - label: "Buy a sports car ({currency}40,000)"
+      when: "money >= 40000"
+      effects: ["money -= 40000", "stats.happiness += rand(8, 15)"]
+      text: You bought a red convertible. You feel young again.
+    - label: Take up painting
+      effects: ["stats.happiness += rand(4, 8)", "stats.smarts += 1"]
+      text: You discovered a talent for watercolors.
+    - label: Ignore it
+      effects: ["stats.happiness -= rand(3, 6)"]
+      text: You pushed through it.
+
+- id: town_festival
+  weight: 0.3
+  text: Old Town is holding its yearly lantern festival.
+  minAge: 6
+  when: "hasLore('old_town')"
+  effects: ["stats.happiness += rand(2, 6)", "unlock lantern_festival"]

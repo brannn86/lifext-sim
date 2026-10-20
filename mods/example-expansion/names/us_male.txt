@@ -1,0 +1,6 @@
+# Same file name as core -> these are ADDED to the US male name list.
+Kai
+Ezra
+Silas
+Jasper
+Rowan

@@ -1,0 +1,53 @@
+# Interactions show up when you tap a person in the People tab.
+# targets: which roles they apply to. `npc` is the person you're interacting with.
+- id: spend_time
+  label: Spend time
+  targets: [parent, sibling, partner, spouse, child, friend]
+  effects: ["npc.relationship += rand(4, 10)", "stats.happiness += rand(1, 3)"]
+  text: "You spent quality time with {npc.first}."
+
+- id: conversation
+  label: Have a conversation
+  targets: [parent, sibling, partner, spouse, child, friend, ex]
+  minAge: 3
+  outcomes:
+    - weight: 80
+      effects: ["npc.relationship += rand(2, 6)"]
+      text: "You had a nice chat with {npc.first}."
+    - weight: 20
+      effects: ["npc.relationship -= rand(2, 6)"]
+      text: "Your conversation with {npc.first} turned awkward."
+
+- id: compliment
+  label: Compliment
+  targets: [partner, spouse, friend, parent, sibling, child]
+  minAge: 4
+  effects: ["npc.relationship += rand(2, 7)"]
+  text: "You told {npc.first} something nice. {cap(npc.he)} smiled."
+
+- id: ask_money
+  label: Ask for money
+  targets: [parent]
+  minAge: 8
+  outcomes:
+    - weight: "npc.relationship"
+      effects: ["vars.gift = rand(10, 200)", "money += vars.gift"]
+      text: "{npc.first} gave you {currency}{fmt(gift)}."
+    - weight: 50
+      effects: ["npc.relationship -= rand(1, 4)"]
+      text: "{npc.first} said no."
+
+- id: gift
+  label: Give a gift
+  targets: [partner, spouse, parent, friend, child, sibling]
+  minAge: 12
+  cost: 100
+  effects: ["npc.relationship += rand(5, 12)"]
+  text: "You gave {npc.first} a gift. {cap(npc.he)} loved it."
+
+- id: argue
+  label: Argue
+  targets: [parent, sibling, partner, spouse, child, friend, ex]
+  minAge: 4
+  effects: ["npc.relationship -= rand(5, 15)", "stats.happiness -= rand(0, 3)"]
+  text: "You got into a heated argument with {npc.first}."
